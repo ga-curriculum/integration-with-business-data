@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Secure Integration Project — General Assembly BAA 10.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900&family=Barlow+Condensed:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --black:#0d0d0d;--black2:#1a1a1a;--black3:#252525;--black4:#333;
+  --line:#2e2e2e;--line2:#404040;--gray-dk:#555;--gray:#888;
+  --gray-lt:#bbb;--white:#fff;
+  --GA-red:#e8333a;--GA-red2:#ff4a50;
+  --yellow:#f5c518;--green:#22c55e;--blue:#3b82f6;--purple:#a855f7;
+  --teal:#14b8a6;--orange:#f97316;
+  --r:4px;--r-lg:10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--black);color:var(--white);font-size:16px;line-height:1.6;min-height:100vh}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--black2)}::-webkit-scrollbar-thumb{background:var(--black4);border-radius:3px}
+/* HEADER */
+header{position:sticky;top:0;z-index:500;background:var(--black);border-bottom:2px solid var(--GA-red);display:flex;align-items:stretch;height:58px}
+.ga-logo{display:flex;align-items:center;gap:10px;padding:0 20px;border-right:1px solid var(--line);flex-shrink:0;cursor:pointer}
+.ga-mark{width:32px;height:32px;background:var(--GA-red);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:#fff;border-radius:2px}
+.ga-name{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--gray-lt);text-transform:uppercase;line-height:1.2}
+.ga-name span{display:block;font-size:10px;color:var(--gray);font-weight:600}
+.tab-bar{display:flex;align-items:stretch;overflow-x:auto;flex:1;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab{display:flex;align-items:center;padding:0 14px;font-family:'Barlow',sans-serif;font-size:12px;font-weight:600;color:var(--gray);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:color .15s,border-color .15s;position:relative;top:2px}
+.tab:hover{color:#fff}.tab.active{color:#fff;border-bottom-color:var(--GA-red)}
+.hd-end{display:flex;align-items:center;padding:0 18px;border-left:1px solid var(--line);flex-shrink:0}
+.prog-chip{background:var(--GA-red);color:#fff;font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 12px;border-radius:20px;white-space:nowrap}
+/* SECTIONS */
+.section{display:none}.section.active{display:block}
+.wrap{max-width:880px;margin:0 auto;padding:48px 24px 80px}
+/* TYPOGRAPHY */
+.eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--GA-red);margin-bottom:10px;display:block}
+h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.4rem,6vw,3.8rem);font-weight:900;line-height:1.05;color:#fff;margin-bottom:16px}
+h1 .red{color:var(--GA-red)}
+h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.6rem,4vw,2.3rem);font-weight:800;line-height:1.1;color:#fff;margin-bottom:8px}
+h2 .red{color:var(--GA-red)}
+.lead{font-size:1.02rem;color:var(--gray-lt);line-height:1.72;margin-bottom:28px;max-width:650px}
+.hr{height:1px;background:var(--line);margin:36px 0}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--r);font-family:'Barlow',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;border:2px solid transparent;transition:all .15s;white-space:nowrap}
+.btn-red{background:var(--GA-red);color:#fff;border-color:var(--GA-red)}.btn-red:hover{background:var(--GA-red2);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--gray-lt);border:2px solid var(--line2);padding:10px 20px;font-size:.88rem;font-weight:600;cursor:pointer;border-radius:var(--r);transition:all .15s}.btn-ghost:hover{border-color:var(--gray);color:#fff}
+.btn-green{background:var(--green);color:var(--black);padding:11px 24px;font-size:.9rem;font-weight:700;border:none;border-radius:var(--r);cursor:pointer;transition:all .15s}.btn-green:hover{background:#16a34a;transform:translateY(-1px)}
+.btn-blue{background:var(--blue);color:#fff;padding:11px 24px;font-size:.9rem;font-weight:700;border:none;border-radius:var(--r);cursor:pointer;transition:all .15s}.btn-blue:hover{background:#2563eb;transform:translateY(-1px)}
+/* CARDS */
+.card{background:var(--black2);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;margin-bottom:16px}
+.card-rb{border-top:3px solid var(--GA-red)}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+/* CALLOUTS */
+.callout{border-radius:var(--r-lg);padding:14px 18px;margin:12px 0;font-size:.88rem;line-height:1.65}
+.callout-tip{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);color:#93c5fd}
+.callout-warn{background:rgba(245,197,24,.08);border:1px solid rgba(245,197,24,.2);color:#fde68a}
+.callout-danger{background:rgba(232,51,58,.1);border:1px solid rgba(232,51,58,.3);color:#fca5a5}
+.callout-success{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);color:#86efac}
+.callout-purple{background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.25);color:#d8b4fe}
+.callout strong{color:#fff}
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.a1{animation:fadeUp .35s ease both}.a2{animation:fadeUp .35s .1s ease both}.a3{animation:fadeUp .35s .2s ease both}
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;background:var(--black3);border:1px solid var(--line);border-radius:var(--r);padding:6px 14px;margin-bottom:20px;font-size:12px;font-weight:600;color:var(--gray-lt);letter-spacing:.04em}
+.hero-kicker .dot{width:8px;height:8px;background:var(--GA-red);border-radius:50%}
+/* ROADMAP */
+.roadmap{display:flex;flex-direction:column}
+.rm-item{display:flex;align-items:flex-start;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.rm-item:last-child{border-bottom:none}
+.rm-dot{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;border:2px solid var(--line);background:var(--black3);color:var(--gray);transition:all .25s}
+.rm-dot.done{background:var(--green);border-color:var(--green);color:var(--black)}
+.rm-dot.active{background:var(--GA-red);border-color:var(--GA-red);color:#fff}
+.rm-label{font-size:.95rem;font-weight:600;color:var(--gray);padding-top:6px}
+.rm-label.active{color:#fff}.rm-label.done{color:var(--green)}
+.rm-sub{font-size:.8rem;color:var(--gray-dk);margin-top:2px}
+/* MCQ */
+.mcq-opt{background:var(--black2);border:2px solid var(--line);border-radius:var(--r-lg);padding:12px 16px;cursor:pointer;display:flex;align-items:flex-start;gap:12px;font-size:.92rem;color:var(--gray-lt);transition:all .15s;text-align:left;width:100%;margin-bottom:8px}
+.mcq-opt:hover:not(.disabled){border-color:var(--GA-red);color:#fff}
+.mcq-opt.correct{border-color:var(--green);background:rgba(34,197,94,.07);color:#fff}
+.mcq-opt.wrong{border-color:var(--GA-red);background:rgba(232,51,58,.07)}
+.mcq-opt.disabled{cursor:default}
+.opt-k{width:26px;height:26px;border-radius:5px;flex-shrink:0;background:var(--black3);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;color:var(--gray);transition:all .15s;margin-top:1px}
+.mcq-opt.correct .opt-k{background:var(--green);border-color:var(--green);color:var(--black)}
+.mcq-opt.wrong .opt-k{background:var(--GA-red);border-color:var(--GA-red);color:#fff}
+.mcq-fb{display:none;border-radius:var(--r-lg);padding:12px 16px;font-size:.87rem;line-height:1.6;margin-bottom:12px}
+.mcq-fb.show{display:block}
+.mcq-fb.ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:#86efac}
+.mcq-fb.bad{background:rgba(232,51,58,.1);border:1px solid rgba(232,51,58,.25);color:#fca5a5}
+/* CONNECTOR BUILDER */
+.conn-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:20px}
+.conn-card{background:var(--black2);border:2px solid var(--line);border-radius:var(--r-lg);padding:18px;cursor:pointer;transition:all .2s;position:relative}
+.conn-card:hover{border-color:var(--line2)}
+.conn-card.selected{border-color:var(--GA-red);background:rgba(232,51,58,.04)}
+.conn-card.selected::after{content:'✓';position:absolute;top:10px;right:12px;font-size:14px;font-weight:700;color:var(--GA-red)}
+.conn-icon{font-size:1.6rem;margin-bottom:8px}
+.conn-title{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;color:#fff;margin-bottom:4px}
+.conn-desc{font-size:.82rem;color:var(--gray);line-height:1.5}
+.conn-tag{display:inline-block;margin-top:8px;padding:2px 8px;border-radius:3px;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+/* DATA FIELD CHECKLIST */
+.field-group{margin-bottom:20px}
+.field-group-title{font-family:'Barlow Condensed',sans-serif;font-size:.82rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-dk);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.field-items{display:flex;flex-wrap:wrap;gap:8px}
+.field-chip{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:20px;border:1.5px solid var(--line2);background:var(--black3);font-size:.83rem;font-weight:600;color:var(--gray-lt);cursor:pointer;transition:all .15s;user-select:none}
+.field-chip:hover{border-color:var(--gray);color:#fff}
+.field-chip.selected-ok{background:rgba(34,197,94,.1);border-color:var(--green);color:var(--green)}
+.field-chip.selected-warn{background:rgba(245,197,24,.08);border-color:var(--yellow);color:var(--yellow)}
+.field-chip.selected-danger{background:rgba(232,51,58,.1);border-color:var(--GA-red);color:var(--GA-red)}
+.field-chip .check{font-size:.7rem}
+/* PRIVACY AUDIT */
+.priv-item{background:var(--black2);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;margin-bottom:10px;transition:all .2s}
+.priv-item.open{border-color:var(--GA-red)}
+.priv-head{display:flex;align-items:center;gap:12px;cursor:pointer}
+.priv-sev{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.priv-title{font-size:.92rem;font-weight:600;color:var(--gray-lt);flex:1;line-height:1.45}
+.priv-item.open .priv-title{color:#fff}
+.priv-arrow{color:var(--gray-dk);transition:transform .2s}
+.priv-item.open .priv-arrow{transform:rotate(90deg)}
+.priv-body{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.priv-item.open .priv-body{display:block}
+/* ═══ IDE ═══ */
+.ide-shell{background:#0a0a0a;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;margin-bottom:16px}
+.ide-titlebar{background:var(--black3);padding:10px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line)}
+.ide-dot{width:12px;height:12px;border-radius:50%}
+.ide-dot.r{background:#ff5f57}.ide-dot.y{background:#febc2e}.ide-dot.g{background:#28c840}
+.ide-filename{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--gray);margin-left:8px}
+.ide-tabs{display:flex;gap:1px;flex:1;justify-content:flex-end}
+.ide-tab{padding:4px 12px;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:500;color:var(--gray-dk);cursor:pointer;border-radius:3px;transition:all .15s}
+.ide-tab.active{background:var(--black2);color:#fff}
+.ide-tab:hover:not(.active){color:var(--gray-lt)}
+.ide-body{display:flex;min-height:340px}
+.ide-gutter{background:#111;padding:12px 0;min-width:42px;text-align:right;padding-right:12px;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:#363636;line-height:1.85;user-select:none;border-right:1px solid #1a1a1a}
+.ide-editor{flex:1;position:relative}
+.ide-textarea{width:100%;height:100%;min-height:340px;background:transparent;border:none;outline:none;padding:12px 16px;font-family:'JetBrains Mono',monospace;font-size:.82rem;color:#e8e8e8;line-height:1.85;resize:none;tab-size:2;caret-color:var(--GA-red)}
+.ide-textarea::placeholder{color:#333}
+.ide-textarea:focus{background:rgba(255,255,255,.01)}
+/* API KEY PANEL */
+.api-panel{background:var(--black2);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;margin-bottom:16px}
+.api-label{font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-dk);margin-bottom:8px}
+.api-input-row{display:flex;gap:8px;align-items:stretch}
+.api-input{flex:1;background:var(--black3);border:1.5px solid var(--line2);border-radius:var(--r);padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:.85rem;color:#fff;outline:none;transition:border-color .15s}
+.api-input:focus{border-color:var(--GA-red)}
+.api-input::placeholder{color:var(--gray-dk)}
+.api-toggle{background:var(--black3);border:1.5px solid var(--line2);border-radius:var(--r);padding:0 12px;font-size:.85rem;color:var(--gray);cursor:pointer;transition:all .15s;white-space:nowrap}
+.api-toggle:hover{border-color:var(--gray);color:#fff}
+.api-status{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:.8rem;color:var(--gray);font-family:'JetBrains Mono',monospace}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--gray-dk)}
+.status-dot.connected{background:var(--green);box-shadow:0 0 6px rgba(34,197,94,.5)}
+.status-dot.error{background:var(--GA-red)}
+/* CHAT INTERFACE */
+.chat-shell{background:#0a0a0a;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;margin-bottom:16px;display:flex;flex-direction:column;height:420px}
+.chat-header{background:var(--black3);padding:10px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);flex-shrink:0}
+.agent-avatar{width:28px;height:28px;background:var(--GA-red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;font-family:'Barlow Condensed',sans-serif;flex-shrink:0}
+.agent-name{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--gray-lt);font-weight:500}
+.agent-model{font-size:.7rem;color:var(--gray-dk);margin-left:auto;font-family:'JetBrains Mono',monospace}
+.chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.chat-messages::-webkit-scrollbar{width:4px}
+.chat-messages::-webkit-scrollbar-thumb{background:var(--black4);border-radius:2px}
+.msg{display:flex;gap:10px;align-items:flex-start;animation:fadeUp .2s ease both}
+.msg.user{flex-direction:row-reverse}
+.msg-bubble{max-width:75%;padding:10px 14px;border-radius:var(--r-lg);font-size:.87rem;line-height:1.65}
+.msg.agent .msg-bubble{background:var(--black3);border:1px solid var(--line);color:var(--gray-lt);border-radius:4px var(--r-lg) var(--r-lg) var(--r-lg)}
+.msg.user .msg-bubble{background:var(--GA-red);color:#fff;border-radius:var(--r-lg) 4px var(--r-lg) var(--r-lg)}
+.msg-avatar{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;margin-top:2px;font-family:'Barlow Condensed',sans-serif}
+.msg.agent .msg-avatar{background:var(--black4);color:var(--gray);border:1px solid var(--line)}
+.msg.user .msg-avatar{background:var(--GA-red);color:#fff}
+.typing{display:none;align-items:center;gap:4px;padding:12px 14px;background:var(--black3);border:1px solid var(--line);border-radius:4px var(--r-lg) var(--r-lg) var(--r-lg);width:fit-content}
+.typing.show{display:flex}
+.typing-dot{width:6px;height:6px;border-radius:50%;background:var(--gray-dk)}
+.typing-dot:nth-child(1){animation:bounce .9s .0s infinite}
+.typing-dot:nth-child(2){animation:bounce .9s .18s infinite}
+.typing-dot:nth-child(3){animation:bounce .9s .36s infinite}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.chat-input-row{border-top:1px solid var(--line);padding:12px 16px;display:flex;gap:8px;flex-shrink:0;background:#0a0a0a}
+.chat-input{flex:1;background:var(--black3);border:1.5px solid var(--line2);border-radius:var(--r-lg);padding:10px 14px;font-family:'Barlow',sans-serif;font-size:.9rem;color:#fff;outline:none;resize:none;line-height:1.5;max-height:100px;transition:border-color .15s}
+.chat-input:focus{border-color:var(--GA-red)}
+.chat-input::placeholder{color:var(--gray-dk)}
+.chat-send{background:var(--GA-red);border:none;border-radius:var(--r-lg);padding:10px 16px;color:#fff;cursor:pointer;font-size:.9rem;transition:all .15s;flex-shrink:0}
+.chat-send:hover{background:var(--GA-red2)}
+.chat-send:disabled{background:var(--black4);cursor:not-allowed}
+/* QUIZ */
+.qz-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+.qz-meta span{font-size:.85rem;color:var(--gray)}
+.prog-bar{height:4px;background:var(--black3);border-radius:2px;margin-bottom:28px;overflow:hidden}
+.prog-fill{height:100%;background:var(--GA-red);border-radius:2px;transition:width .4s}
+.quiz-q{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:700;line-height:1.3;color:#fff;margin-bottom:20px}
+.q-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.q-opt{background:var(--black2);border:2px solid var(--line);border-radius:var(--r-lg);padding:14px 18px;cursor:pointer;display:flex;align-items:flex-start;gap:14px;font-size:.95rem;color:var(--gray-lt);transition:all .16s;text-align:left;width:100%}
+.q-opt:hover:not(.disabled){border-color:var(--GA-red);color:#fff;background:rgba(232,51,58,.05)}
+.q-opt.correct{border-color:var(--green);background:rgba(34,197,94,.07);color:#fff}
+.q-opt.wrong{border-color:var(--GA-red);background:rgba(232,51,58,.08);color:#fff}
+.q-opt.disabled{cursor:default}
+.q-opt-k{width:30px;height:30px;border-radius:6px;flex-shrink:0;background:var(--black3);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:700;color:var(--gray)}
+.q-opt.correct .q-opt-k{background:var(--green);border-color:var(--green);color:var(--black)}
+.q-opt.wrong .q-opt-k{background:var(--GA-red);border-color:var(--GA-red);color:#fff}
+.q-opt:hover:not(.disabled) .q-opt-k{border-color:var(--GA-red);color:var(--GA-red)}
+.fb-box{display:none;border-radius:var(--r-lg);padding:14px 18px;font-size:.92rem;line-height:1.6;margin-bottom:14px}
+.fb-box.show{display:flex;gap:10px;align-items:flex-start}
+.fb-box.ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#86efac}
+.fb-box.bad{background:rgba(232,51,58,.1);border:1px solid rgba(232,51,58,.3);color:#fca5a5}
+/* RESULTS */
+.results-ring{position:relative;width:120px;height:120px;flex-shrink:0}
+.results-ring-txt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-pct{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;line-height:1}
+.ring-sub{font-size:.7rem;color:var(--gray);letter-spacing:.1em;text-transform:uppercase;margin-top:2px}
+.score-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.score-row:last-child{border-bottom:none}
+.score-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.score-bar-wrap{width:80px;height:3px;background:var(--black3);border-radius:2px;flex-shrink:0}
+.score-bar-fill{height:100%;border-radius:2px}
+.tk-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.tk-item:last-child{border-bottom:none}
+.tk-num{font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;color:var(--GA-red);flex-shrink:0;line-height:1;padding-top:2px}
+.tk-txt{font-size:.92rem;color:var(--gray-lt);line-height:1.65}
+/* code colors in IDE */
+.kw{color:#c792ea}.str{color:#c3e88d}.fn{color:#82aaff}.cm{color:#546e7a;font-style:italic}.num{color:#f78c6c}.key{color:#f07178}.punc{color:#89ddff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="ga-logo" onclick="nav('intro')">
+    <div class="ga-mark">GA</div>
+    <div class="ga-name">General Assembly<span>Build AI Agents · BAA 10.0</span></div>
+  </div>
+  <div class="tab-bar">
+    <div class="tab active" onclick="nav('intro')"    id="t-intro">⬡ Overview</div>
+    <div class="tab"        onclick="nav('brief')"    id="t-brief">📋 Brief</div>
+    <div class="tab"        onclick="nav('connectors')" id="t-connectors">🔌 Connectors</div>
+    <div class="tab"        onclick="nav('dataplan')" id="t-dataplan">🗄 Data Plan</div>
+    <div class="tab"        onclick="nav('privacy')"  id="t-privacy">🔒 Privacy</div>
+    <div class="tab"        onclick="nav('ide')"      id="t-ide">💻 Live IDE</div>
+    <div class="tab"        onclick="nav('quiz')"     id="t-quiz">◇ Check</div>
+    <div class="tab"        onclick="nav('results')"  id="t-results">★ Results</div>
+  </div>
+  <div class="hd-end"><div class="prog-chip" id="progressChip">0 / 5</div></div>
+</header>
+
+<!-- ══════════════════════ INTRO ══════════════════════════ -->
+<div class="section active" id="s-intro">
+  <div class="wrap">
+    <div class="a1" style="padding-bottom:40px;border-bottom:1px solid var(--line);margin-bottom:36px">
+      <div class="hero-kicker"><div class="dot"></div>Hands-On Lab · Module 10 · BAA 10.0</div>
+      <h1>Secure<br/><span class="red">Integration Project</span></h1>
+      <p class="lead">You're the architect. Design a real data integration plan for an AI agent that reads customer data from a live source — then defend every decision in front of a privacy auditor. The last stop: a live IDE where your agent actually runs.</p>
+      <button class="btn btn-red" onclick="nav('brief')">Start the Project →</button>
+    </div>
+
+    <span class="eyebrow">What You'll Build</span>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:32px" class="a2">
+      <div class="card" style="padding:20px;display:flex;gap:14px">
+        <div style="font-size:2rem;flex-shrink:0">🔌</div>
+        <div><strong style="color:#fff;display:block;margin-bottom:4px">Connector Plan</strong><div style="font-size:.88rem;color:var(--gray-lt);line-height:1.5">Choose and justify the connectors your agent needs — CRM, spreadsheet, or both.</div></div>
+      </div>
+      <div class="card" style="padding:20px;display:flex;gap:14px">
+        <div style="font-size:2rem;flex-shrink:0">🗄</div>
+        <div><strong style="color:#fff;display:block;margin-bottom:4px">Data Access Map</strong><div style="font-size:.88rem;color:var(--gray-lt);line-height:1.5">Specify exactly which fields the agent reads — and argue why each one is necessary (or not).</div></div>
+      </div>
+      <div class="card" style="padding:20px;display:flex;gap:14px">
+        <div style="font-size:2rem;flex-shrink:0">🔒</div>
+        <div><strong style="color:#fff;display:block;margin-bottom:4px">Privacy Audit</strong><div style="font-size:.88rem;color:var(--gray-lt);line-height:1.5">Identify and document privacy concerns — then propose mitigations a regulator would accept.</div></div>
+      </div>
+      <div class="card" style="padding:20px;display:flex;gap:14px">
+        <div style="font-size:2rem;flex-shrink:0">💻</div>
+        <div><strong style="color:#fff;display:block;margin-bottom:4px">Live IDE</strong><div style="font-size:.88rem;color:var(--gray-lt);line-height:1.5">Paste your API key and run your agent for real — see it respond to queries about the integration you designed.</div></div>
+      </div>
+    </div>
+
+    <div class="hr"></div>
+    <span class="eyebrow">Lab Roadmap</span>
+    <div class="card a3"><div class="roadmap">
+      <div class="rm-item"><div class="rm-dot active" id="dot-brief">—</div><div><div class="rm-label active" id="lbl-brief">Read the Brief</div><div class="rm-sub">Your client, their use case, and the agent's mission</div></div></div>
+      <div class="rm-item"><div class="rm-dot" id="dot-connectors">1</div><div><div class="rm-label" id="lbl-connectors">Choose Your Connectors</div><div class="rm-sub">Select from CRM, Google Sheets, and hybrid options — match to the use case</div></div></div>
+      <div class="rm-item"><div class="rm-dot" id="dot-dataplan">2</div><div><div class="rm-label" id="lbl-dataplan">Map the Data Fields</div><div class="rm-sub">Tag each field as Necessary / Sensitive / Should Not Access</div></div></div>
+      <div class="rm-item"><div class="rm-dot" id="dot-privacy">3</div><div><div class="rm-label" id="lbl-privacy">Privacy Concern Analysis</div><div class="rm-sub">Identify the top 4 privacy risks — describe mitigations</div></div></div>
+      <div class="rm-item"><div class="rm-dot" id="dot-ide">4</div><div><div class="rm-label" id="lbl-ide">Live IDE — Run Your Agent</div><div class="rm-sub">Enter an LLM API key, write your system prompt, and test the agent live</div></div></div>
+      <div class="rm-item"><div class="rm-dot" id="dot-quiz">5</div><div><div class="rm-label" id="lbl-quiz">Knowledge Check · 7 questions · 70% to pass</div></div></div>
+    </div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════ BRIEF ══════════════════════════ -->
+<div class="section" id="s-brief">
+  <div class="wrap">
+    <span class="eyebrow">The Client Brief</span>
+    <h2>Northstar <span class="red">SaaS Co.</span></h2>
+    <p class="lead">Your client is a B2B SaaS company with 3,200 customers. They want an AI agent that reads their customer data and helps their Customer Success team answer questions like: "Which accounts are at risk of churning?" and "Who hasn't logged in for 30 days?"</p>
+
+    <div class="card" style="border-left:4px solid var(--GA-red);padding:22px 24px;margin-bottom:16px">
+      <div style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--GA-red);margin-bottom:12px">Client Situation</div>
+      <p style="font-size:.93rem;color:var(--gray-lt);line-height:1.8">Northstar's Customer Success (CS) team of 12 currently pulls weekly reports manually from two systems: their HubSpot CRM (account records, contact info, deal history) and a Google Sheet maintained by the ops team (manual churn scores, NPS survey results, support ticket counts, last-login dates from their product database export).<br/><br/>The CS team wants an agent they can ask natural-language questions to. The agent should read both sources, find relevant accounts, and surface insights without the CS manager having to write a single formula.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+      <div class="card" style="padding:18px 20px">
+        <div style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:10px">CRM (HubSpot)</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:5px">
+          <li style="font-size:.85rem;color:var(--gray-lt)">👤 Contact: name, email, phone, title</li>
+          <li style="font-size:.85rem;color:var(--gray-lt)">🏢 Company: name, industry, size, ARR</li>
+          <li style="font-size:.85rem;color:var(--gray-lt)">💼 Deal: stage, close date, MRR, owner</li>
+          <li style="font-size:.85rem;color:var(--gray-lt)">🗒 Notes: CS rep call notes (free text)</li>
+          <li style="font-size:.85rem;color:var(--gray-lt)">📅 Activity: email opens, meeting history</li>
+          <li style="font-size:.85rem;color:var(--gray-lt)">🔐 Billing: payment method type, status</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:18px 20px">
+        <div style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-bottom:10px">Google Sheet (Ops Export)</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:5px">
+          <li style="font-size:.85rem;color:var(--gray-lt)">🕐 Last login date (from product DB)</li>
+          <li style="font-size:.85rem;color:var(--gray-lt)">📊 Monthly active users (MAU) count</li>
+          <li style="font-size:.85rem;color:var(--gray-lt)">🎯 NPS score (0–10, last survey)</li>
+          <li style="font-size:.85rem;color:var(--gray-lt)">🎫 Support tickets opened (last 90d)</li>
+          <li style="font-size:.85rem;color:var(--gray-lt)">⚠️ Churn risk score (manual, 1–5)</li>
+          <li style="font-size:.85rem;color:var(--gray-lt)">📝 CS notes (free text, ops additions)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout callout-warn">
+      <strong>⚠️ What makes this hard:</strong> The data contains both operational metrics (fine to read) and personal information (needs justification). Some fields the agent could access have no legitimate purpose for churn analysis — but they're in the same source. Your job is to design the integration precisely, not permissively.
+    </div>
+
+    <button class="btn btn-red" style="margin-top:24px" onclick="nav('connectors')">Choose My Connectors →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════ CONNECTORS ══════════════════════════ -->
+<div class="section" id="s-connectors">
+  <div class="wrap">
+    <span class="eyebrow">Section 01 · Design Activity</span>
+    <h2>Choose Your <span class="red">Connectors</span></h2>
+    <p class="lead">Select the connectors the agent needs. Then answer the justification question — why this combination, and not a simpler or broader one?</p>
+
+    <div class="callout callout-tip" style="margin-bottom:20px">
+      <strong>💡 Think like an architect:</strong> More connectors = more attack surface. A connector that touches PII but doesn't provide unique signal should be reconsidered. Pick what you need — no more.
+    </div>
+
+    <span class="eyebrow" style="margin-bottom:12px">Available Connectors</span>
+    <div class="conn-grid" id="connGrid"></div>
+
+    <div id="connJustify" style="display:none;margin-top:4px">
+      <div style="font-size:.82rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-dk);margin-bottom:8px">Justify your selection (in one sentence each)</div>
+      <div id="connJustifyFields"></div>
+      <div id="connQuiz" style="margin-top:20px"></div>
+      <div id="connNext" style="margin-top:20px;display:none">
+        <button class="btn btn-red" onclick="markDone('connectors');nav('dataplan')">Next: Map the Data Fields →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ DATA PLAN ══════════════════════════ -->
+<div class="section" id="s-dataplan">
+  <div class="wrap">
+    <span class="eyebrow">Section 02 · Design Activity</span>
+    <h2>Data Access <span class="red">Map</span></h2>
+    <p class="lead">Every field the agent reads is a liability as well as an asset. Tag each field below. Then submit — the correct answers reveal the principle behind data minimization.</p>
+
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px">
+      <div style="display:flex;align-items:center;gap:8px;font-size:.84rem;color:var(--gray-lt)"><div style="width:12px;height:12px;border-radius:50%;background:var(--green)"></div>✅ Necessary — agent needs this to do its job</div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:.84rem;color:var(--gray-lt)"><div style="width:12px;height:12px;border-radius:50%;background:var(--yellow)"></div>⚠️ Sensitive — useful but requires justification</div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:.84rem;color:var(--gray-lt)"><div style="width:12px;height:12px;border-radius:50%;background:var(--GA-red)"></div>🚫 Should Not Access — no legitimate agent need</div>
+    </div>
+
+    <div id="dataFieldGroups"></div>
+
+    <div style="margin-top:20px;display:flex;gap:10px">
+      <button class="btn btn-red" id="dpCheckBtn" onclick="checkDataPlan()">Check My Data Plan</button>
+      <button class="btn btn-ghost" id="dpNextBtn" onclick="markDone('dataplan');nav('privacy')" style="display:none">Next: Privacy Audit →</button>
+    </div>
+    <div id="dpResult" style="margin-top:14px"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════ PRIVACY ══════════════════════════ -->
+<div class="section" id="s-privacy">
+  <div class="wrap">
+    <span class="eyebrow">Section 03 · Privacy Analysis</span>
+    <h2>Privacy <span class="red">Concern Analysis</span></h2>
+    <p class="lead">You must identify and document at least one privacy concern in the integration you just designed. Click each concern to assess it and propose a mitigation. A real data integration plan requires all four.</p>
+
+    <div class="callout callout-danger" style="margin-bottom:20px">
+      <strong>🔒 The rule:</strong> Every AI agent that touches PII must have a written privacy analysis before it goes to production. This is not optional under GDPR, CCPA, or most enterprise security policies. This section is that document.
+    </div>
+
+    <div id="privacyList"></div>
+
+    <div id="privacyProgress" style="margin-top:10px;font-size:.85rem;color:var(--gray)">Reviewed: <span id="privCount" style="color:var(--GA-red);font-weight:700">0</span> / 4</div>
+    <div style="margin-top:16px">
+      <button class="btn btn-ghost" id="privNextBtn" onclick="markDone('privacy');nav('ide')" style="display:none">Next: Live IDE →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ IDE ══════════════════════════ -->
+<div class="section" id="s-ide">
+  <div class="wrap">
+    <span class="eyebrow">Section 04 · Live Lab</span>
+    <h2>Live <span class="red">Integration IDE</span></h2>
+    <p class="lead">Your agent design is now ready to run. Enter an API key from an LLM provider, customize your agent's system prompt, and test it with real queries about the integration you built.</p>
+
+    <div class="callout callout-warn" style="margin-bottom:20px">
+      <strong>🔑 API Key Safety:</strong> Your key is stored only in this browser session — it is never transmitted to any server except the LLM provider's official API endpoint directly from your browser. You can use any Anthropic, OpenAI, or compatible key. Clear the field when done.
+    </div>
+
+    <!-- API KEY PANEL -->
+    <div class="api-panel">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;color:#fff">🔑 LLM Connection</div>
+        <div style="display:flex;gap:8px">
+          <button class="badge" style="cursor:pointer;border:1px solid var(--line2);background:transparent;padding:4px 12px" id="providerBtn" onclick="cycleProvider()">Provider: Anthropic</button>
+        </div>
+      </div>
+      <div class="api-label">API Key</div>
+      <div class="api-input-row">
+        <input class="api-input" id="apiKey" type="password" placeholder="sk-ant-... or sk-..." autocomplete="off" oninput="validateKey()"/>
+        <button class="api-toggle" onclick="toggleKeyVis()">👁 Show</button>
+        <button class="btn-green" style="padding:10px 18px;font-size:.85rem" onclick="connectAPI()">Connect</button>
+      </div>
+      <div class="api-status">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">Not connected — enter your API key above</span>
+      </div>
+    </div>
+
+    <!-- SYSTEM PROMPT IDE -->
+    <div style="margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;color:#fff">📄 System Prompt Editor</div>
+      <button class="btn-ghost" style="font-size:.78rem;padding:6px 14px" onclick="resetPrompt()">↺ Reset to Default</button>
+    </div>
+    <div class="ide-shell">
+      <div class="ide-titlebar">
+        <div class="ide-dot r"></div><div class="ide-dot y"></div><div class="ide-dot g"></div>
+        <div class="ide-filename">system_prompt.txt</div>
+        <div class="ide-tabs">
+          <div class="ide-tab active" onclick="switchPane('prompt',this)">System Prompt</div>
+          <div class="ide-tab" onclick="switchPane('schema',this)">Data Schema</div>
+          <div class="ide-tab" onclick="switchPane('privacy',this)">Privacy Rules</div>
+        </div>
+      </div>
+      <div class="ide-body">
+        <div class="ide-gutter" id="ideGutter"></div>
+        <div class="ide-editor">
+          <textarea class="ide-textarea" id="ideTextarea" spellcheck="false" oninput="updateGutter()" onscroll="syncGutter()"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHAT -->
+    <div style="margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;color:#fff">💬 Agent Test Console</div>
+    <div class="chat-shell">
+      <div class="chat-header">
+        <div class="agent-avatar">CS</div>
+        <div>
+          <div class="agent-name" id="agentNameDisplay">Northstar CS Agent</div>
+          <div style="font-size:.7rem;color:var(--gray-dk);font-family:'JetBrains Mono',monospace">Ready for queries</div>
+        </div>
+        <div class="agent-model" id="modelBadge">claude-sonnet-4-20250514</div>
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <div class="msg agent">
+          <div class="msg-avatar">CS</div>
+          <div class="msg-bubble">Hello! I'm your Northstar Customer Success agent. I can answer questions about customer health, churn risk, and account activity based on your CRM and ops data. <strong>Connect your API key to activate me.</strong></div>
+        </div>
+      </div>
+      <div class="chat-input-row">
+        <textarea class="chat-input" id="chatInput" placeholder="Ask me about accounts, churn risk, login activity..." rows="1" onkeydown="handleEnter(event)" oninput="autoResize(this)"></textarea>
+        <button class="chat-send" id="chatSend" onclick="sendMessage()" disabled>➤</button>
+      </div>
+    </div>
+
+    <!-- SAMPLE PROMPTS -->
+    <div style="margin-bottom:6px;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-dk)">Try These Queries</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px" id="samplePrompts"></div>
+
+    <button class="btn btn-red" onclick="markDone('ide');nav('quiz')">Proceed to Knowledge Check →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════ QUIZ ══════════════════════════ -->
+<div class="section" id="s-quiz">
+  <div class="wrap">
+    <span class="eyebrow">Knowledge Check</span>
+    <h2>7 <span class="red">Questions</span></h2>
+    <p class="lead">Drawn directly from the integration design and privacy principles in this lab. 70% to pass.</p>
+    <div id="quizActive">
+      <div class="qz-meta"><span id="qMeta">Question 1 of 7</span><span id="qScoreTxt">Score: 0 / 0</span></div>
+      <div class="prog-bar"><div class="prog-fill" id="qProg" style="width:0%"></div></div>
+      <div class="card card-rb">
+        <div class="quiz-q" id="quizQ"></div>
+        <div class="q-opts" id="quizOpts"></div>
+        <div class="fb-box" id="quizFB"></div>
+        <div><button class="btn btn-red" id="qNextBtn" onclick="nextQ()" style="display:none">Continue →</button></div>
+      </div>
+    </div>
+    <div id="quizDone" style="display:none">
+      <div class="card card-rb">
+        <h3 style="font-size:1.2rem;margin-bottom:8px">Quiz Complete <span id="qBadge"></span></h3>
+        <p style="font-size:.95rem;color:var(--gray-lt);margin-bottom:20px;line-height:1.7" id="qMsg"></p>
+        <button class="btn btn-green" onclick="markDone('quiz');buildResults();nav('results')">See My Results →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ RESULTS ══════════════════════════ -->
+<div class="section" id="s-results">
+  <div class="wrap">
+    <span class="eyebrow">Project Debrief</span>
+    <h2>Project <span class="red">Complete</span></h2>
+    <div id="resultsBody"></div>
+  </div>
+</div>
+
+<script>
+// ─── NAV ──────────────────────────────────────────────────────────────────────
+const ALL_SECS=['intro','brief','connectors','dataplan','privacy','ide','quiz','results'];
+let completed=new Set(),sectionScores={};
+function nav(id){
+  ALL_SECS.forEach(s=>{
+    document.getElementById('s-'+s).classList.remove('active');
+    const t=document.getElementById('t-'+s);if(t)t.classList.remove('active');
+  });
+  document.getElementById('s-'+id).classList.add('active');
+  const t=document.getElementById('t-'+id);if(t)t.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='connectors'&&!connBuilt)buildConnectors();
+  if(id==='dataplan'&&!dpBuilt)buildDataPlan();
+  if(id==='privacy'&&!privBuilt)buildPrivacy();
+  if(id==='ide'&&!ideBuilt)buildIDE();
+  if(id==='quiz'&&!quizStarted)initQuiz();
+}
+function markDone(key){
+  completed.add(key);
+  document.getElementById('progressChip').textContent=completed.size+' / 5';
+  const d=document.getElementById('dot-'+key),l=document.getElementById('lbl-'+key);
+  if(d){d.className='rm-dot done';d.textContent='✓';}
+  if(l)l.className='rm-label done';
+}
+
+// ─── CONNECTORS ───────────────────────────────────────────────────────────────
+let connBuilt=false, selectedConns=new Set(), connAnswered=false;
+const CONNECTORS=[
+  {id:'hubspot',    icon:'🟠',title:'HubSpot CRM',     tag:'CRM',tagColor:'#f97316',  desc:'OAuth 2.0 connector. Reads contacts, companies, deals, notes, and activity. Scoped per-object. 10,000 API calls/day limit.',correct:true},
+  {id:'gsheets',    icon:'🟢',title:'Google Sheets',   tag:'Spreadsheet',tagColor:'#22c55e',desc:'Service account auth. Read-only or read-write. Accesses any sheet the service account has been shared on. Row-level data.',correct:true},
+  {id:'stripe',     icon:'🔵',title:'Stripe (Billing)',tag:'Payment',tagColor:'#3b82f6',  desc:'API key auth. Reads invoices, subscriptions, payment methods. Contains full billing details including card BIN and payment failure codes.',correct:false},
+  {id:'gmail',      icon:'📧',title:'Gmail / Inbox',   tag:'Email',tagColor:'#a855f7',  desc:'OAuth 2.0. Can read all emails in the connected account — including personal communications, attachments, and email from non-customers.',correct:false},
+  {id:'slack',      icon:'💬',title:'Slack',           tag:'Comms',tagColor:'#14b8a6',  desc:'Bot token. Can read all messages in channels the bot is invited to. Contains internal CS conversations, escalation threads, and unstructured team communications.',correct:false},
+  {id:'bigquery',   icon:'🔷',title:'BigQuery (DW)',   tag:'Data Warehouse',tagColor:'#60a5fa',desc:'Service account. Read access to all tables the SA is granted. Could include raw product DB tables, event logs, and PII not filtered in the ops export.',correct:false},
+];
+const CORRECT_CONNS=['hubspot','gsheets'];
+
+function buildConnectors(){
+  connBuilt=true;
+  const el=document.getElementById('connGrid');
+  CONNECTORS.forEach(c=>{
+    const card=document.createElement('div');card.className='conn-card';card.id='cc-'+c.id;
+    card.innerHTML=`<div class="conn-icon">${c.icon}</div><div class="conn-title">${c.title}</div><div class="conn-desc">${c.desc}</div><span class="conn-tag" style="background:${c.tagColor}22;color:${c.tagColor}">${c.tag}</span>`;
+    card.addEventListener('click',()=>toggleConn(c.id));
+    el.appendChild(card);
+  });
+}
+function toggleConn(id){
+  const card=document.getElementById('cc-'+id);
+  if(selectedConns.has(id)){selectedConns.delete(id);card.classList.remove('selected');}
+  else{selectedConns.add(id);card.classList.add('selected');}
+  if(selectedConns.size>0)showConnJustify();
+}
+function showConnJustify(){
+  const jEl=document.getElementById('connJustify');
+  jEl.style.display='block';
+  if(connAnswered)return;
+  // Check if correct connectors selected
+  const selected=[...selectedConns];
+  const hasHubspot=selected.includes('hubspot');
+  const hasSheets=selected.includes('gsheets');
+  const hasExtras=selected.some(s=>!CORRECT_CONNS.includes(s));
+  // Build quiz question
+  const qEl=document.getElementById('connQuiz');
+  qEl.innerHTML='';
+  const opts=[
+    {k:'A',text:'HubSpot + Google Sheets — provides all the data needed for churn analysis without unnecessary scope.',ans:true,fb:'Correct. HubSpot has account health signals, contact info, and deal context. Google Sheets has usage, NPS, and churn scores. Together they cover the full picture. Adding Stripe, Gmail, or Slack broadens the attack surface without adding churn-relevant signal.'},
+    {k:'B',text:'HubSpot + Google Sheets + Stripe — billing status is important for churn prediction.',ans:false,fb:'Billing status (active/cancelled) IS in HubSpot already as deal stage and MRR. Stripe adds raw payment data including card details and failure codes — which is PII/PCI scope the agent doesn\'t need and shouldn\'t hold.'},
+    {k:'C',text:'All six connectors — maximum data gives the best churn predictions.',ans:false,fb:'More data is not better — it\'s more risk. Gmail access means the agent can read personal emails. BigQuery access could expose unfiltered PII tables. The principle of data minimization requires connecting only what\'s needed for the stated purpose.'},
+    {k:'D',text:'Google Sheets only — the ops export already contains the key churn signals.',ans:false,fb:'The Sheets export has churn scores but no account-level context — no company name, no deal value, no CS ownership. Without HubSpot, the agent can\'t answer "who is the CS owner for this account?" or "what\'s the contract value at risk?"'},
+  ];
+  opts.forEach((opt,i)=>{
+    const btn=document.createElement('button');btn.className='mcq-opt';
+    btn.innerHTML=`<div class="opt-k">${opt.k}</div><div>${opt.text}</div>`;
+    btn.addEventListener('click',()=>{
+      if(connAnswered)return;connAnswered=true;
+      opts.forEach((_,j)=>{
+        const btns=qEl.querySelectorAll('.mcq-opt');btns[j].classList.add('disabled');
+        if(opts[j].ans)btns[j].classList.add('correct');
+        else if(j===i&&!opt.ans)btns[j].classList.add('wrong');
+      });
+      const fb=document.createElement('div');
+      fb.className='mcq-fb show '+(opt.ans?'ok':'bad');
+      fb.innerHTML=`<strong>${opt.ans?'✓ Correct:':'Not quite:'}</strong> ${opt.fb}`;
+      qEl.appendChild(fb);
+      sectionScores.connectors={earned:opt.ans?1:0,possible:1};
+      // Sync connector selection to correct
+      CORRECT_CONNS.forEach(id=>{selectedConns.add(id);document.getElementById('cc-'+id).classList.add('selected');});
+      document.getElementById('connNext').style.display='block';
+    });
+    qEl.appendChild(btn);
+  });
+  qEl.insertAdjacentHTML('beforebegin','<div style="font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-dk);margin-bottom:8px;margin-top:4px">Which connector combination best fits this use case?</div>');
+}
+
+// ─── DATA PLAN ────────────────────────────────────────────────────────────────
+let dpBuilt=false, fieldSelections={}, dpChecked=false;
+const DATA_FIELDS=[
+  {group:'HubSpot — Contact',color:'#f97316',fields:[
+    {id:'contact_name',   label:'Contact Name',         correct:'sensitive', why:'Needed to address accounts — but the agent should use company name for most churn queries; individual name adds PII exposure'},
+    {id:'contact_email',  label:'Contact Email',         correct:'danger',   why:'Not needed for churn analysis — the agent answers questions for the CS team who already knows their contacts. Storing email in agent context creates a data breach risk.'},
+    {id:'contact_phone',  label:'Contact Phone',         correct:'danger',   why:'Phone numbers have no role in churn detection. No legitimate agent need.'},
+    {id:'company_name',   label:'Company Name',          correct:'ok',       why:'Essential — all churn queries reference specific accounts by company name.'},
+    {id:'company_arr',    label:'ARR / Contract Value',  correct:'ok',       why:'Essential — high-value account churn risk is a primary CS priority. Agent needs this to prioritize.'},
+    {id:'deal_stage',     label:'Deal Stage / Status',   correct:'ok',       why:'Needed — an account in "at-risk" deal stage is directly relevant to churn analysis.'},
+    {id:'cs_notes',       label:'CS Rep Call Notes',      correct:'sensitive', why:'Free-text notes often contain sensitive customer context (personal situations, complaints, NDA details). Useful for context but should be read-only and not stored in agent memory.'},
+    {id:'payment_method', label:'Payment Method Type',   correct:'danger',   why:'No churn analysis value. Payment method type (card/ACH) is billing data with no predictive signal for the CS team\'s questions.'},
+  ]},
+  {group:'Google Sheet — Ops Export',color:'#22c55e',fields:[
+    {id:'last_login',     label:'Last Login Date',        correct:'ok',       why:'Core churn signal — "who hasn\'t logged in for 30 days" is the primary use case.'},
+    {id:'mau',            label:'Monthly Active Users',   correct:'ok',       why:'Essential — MAU drop is the strongest leading indicator of churn.'},
+    {id:'nps',            label:'NPS Score',               correct:'ok',       why:'Directly relevant — NPS < 6 (detractor) is a high churn risk indicator.'},
+    {id:'tickets',        label:'Support Ticket Count',    correct:'ok',       why:'Needed — high ticket volume can indicate product friction or dissatisfaction.'},
+    {id:'churn_score',    label:'Churn Risk Score (1–5)',  correct:'ok',       why:'The primary output metric the CS team uses — essential context for every query.'},
+    {id:'ops_notes',      label:'CS Notes (Ops additions)',correct:'sensitive', why:'Same risk as CRM notes — useful context but free-text PII. Read-only access is appropriate.'},
+  ]},
+];
+const TAG_OPTS=[{v:'ok',label:'✅ Necessary'},{v:'sensitive',label:'⚠️ Sensitive'},{v:'danger',label:'🚫 Should Not Access'}];
+
+function buildDataPlan(){
+  dpBuilt=true;
+  const el=document.getElementById('dataFieldGroups');
+  DATA_FIELDS.forEach(grp=>{
+    const wrap=document.createElement('div');wrap.className='field-group';
+    wrap.innerHTML=`<div class="field-group-title"><div style="width:10px;height:10px;border-radius:50%;background:${grp.color}"></div>${grp.group}</div>`;
+    const chips=document.createElement('div');chips.className='field-items';
+    grp.fields.forEach(field=>{
+      const chip=document.createElement('div');chip.className='field-chip';chip.id='fc-'+field.id;
+      chip.innerHTML=`<span class="check" id="fck-${field.id}">○</span>${field.label}`;
+      chip.addEventListener('click',()=>cycleField(field.id));
+      chips.appendChild(chip);
+    });
+    wrap.appendChild(chips);
+    el.appendChild(wrap);
+  });
+  // Tagging legend below
+  const legend=document.createElement('div');
+  legend.style.cssText='margin-top:8px;font-size:.8rem;color:var(--gray-dk);display:flex;gap:16px;flex-wrap:wrap';
+  legend.innerHTML='Click to cycle: <span style="color:var(--green)">✅ Necessary</span> → <span style="color:var(--yellow)">⚠️ Sensitive</span> → <span style="color:var(--GA-red)">🚫 Should Not Access</span> → untagged';
+  el.appendChild(legend);
+}
+const CYCLE=['ok','sensitive','danger',null];
+function cycleField(id){
+  if(dpChecked)return;
+  const cur=fieldSelections[id]||null;
+  const idx=CYCLE.indexOf(cur);
+  const next=CYCLE[(idx+1)%CYCLE.length];
+  fieldSelections[id]=next;
+  const chip=document.getElementById('fc-'+id);
+  chip.className='field-chip'+(next?` selected-${next}':'')`;
+  const ck=document.getElementById('fck-'+id);
+  ck.textContent=next==='ok'?'✅':next==='sensitive'?'⚠️':next==='danger'?'🚫':'○';
+  // Count tagged
+  const tagged=Object.values(fieldSelections).filter(v=>v!==null).length;
+  const total=DATA_FIELDS.reduce((s,g)=>s+g.fields.length,0);
+  document.getElementById('dpCheckBtn').disabled=tagged<total*0.6;
+}
+function checkDataPlan(){
+  dpChecked=true;
+  let correct=0,total=0;
+  DATA_FIELDS.forEach(grp=>{
+    grp.fields.forEach(field=>{
+      total++;
+      const selected=fieldSelections[field.id]||null;
+      const chip=document.getElementById('fc-'+field.id);
+      chip.style.cursor='default';
+      if(selected===field.correct){
+        correct++;
+        chip.style.border=`1.5px solid var(--green)`;
+      } else {
+        chip.style.border=`1.5px solid var(--GA-red)`;
+      }
+    });
+  });
+  sectionScores.dataplan={earned:correct,possible:total};
+  const pct=Math.round(correct/total*100);
+  const resultEl=document.getElementById('dpResult');
+  resultEl.innerHTML=`<div class="callout ${pct>=70?'callout-success':'callout-warn'}"><strong>${correct}/${total} correct (${pct}%)</strong><br/>${pct>=70?'Strong data minimization instinct. Review the highlighted fields below.':'Review the highlighted incorrect fields — the principle is: only tag something as Necessary if the agent cannot answer its core questions without it.'}</div><div style="margin-top:14px">${buildFieldExplanations()}</div>`;
+  document.getElementById('dpCheckBtn').style.display='none';
+  document.getElementById('dpNextBtn').style.display='inline-flex';
+}
+function buildFieldExplanations(){
+  let html='<div style="font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-dk);margin-bottom:10px">Field-by-Field Rationale</div>';
+  DATA_FIELDS.forEach(grp=>{
+    grp.fields.forEach(field=>{
+      const sel=fieldSelections[field.id]||'untagged';
+      const correct=field.correct;
+      const ok=sel===correct;
+      const colMap={ok:'var(--green)',sensitive:'var(--yellow)',danger:'var(--GA-red)'};
+      html+=`<div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:.85rem">
+        <div style="width:7px;height:7px;border-radius:50%;background:${colMap[correct]||'var(--gray)'};flex-shrink:0;margin-top:6px"></div>
+        <div style="flex:1"><strong style="color:${ok?'var(--green)':'var(--GA-red)'}">${field.label}</strong> <span style="color:var(--gray-dk);font-size:.75rem">${ok?'✓ Correct':'✗ Should be: '+correct}</span><br/><span style="color:var(--gray-lt);line-height:1.6">${field.why}</span></div></div>`;
+    });
+  });
+  return html;
+}
+
+// ─── PRIVACY ──────────────────────────────────────────────────────────────────
+let privBuilt=false, privReviewed=new Set();
+const PRIVACY_ITEMS=[
+  {id:'p1', sev:'danger', sevCol:'var(--GA-red)', title:'Free-text notes may contain personal information about individual customers',
+   risk:'CS notes are unstructured and frequently contain personal details — a customer mentioned a health issue affecting their budget, a personal contact at the company shared internal politics, or an NDA-sensitive discussion. If this text is passed to an LLM, it may be stored in model context or logged.',
+   mitigation:'Tag all free-text note fields as read-only context, never as training data. Implement a PII redaction step before note text enters the agent\'s context window — redacting emails, names, and phone numbers from note text. Log what was redacted. Add a data retention policy: agent context is cleared after each session.'},
+  {id:'p2', sev:'danger', sevCol:'var(--GA-red)', title:'Agent responses may be cached or logged by the LLM provider, leaking customer data',
+   risk:'When the agent sends a query like "show me accounts where churn risk > 3 and MRR > $2,000", the response may contain company names, ARR, and contact data. If the LLM provider logs prompts and responses (which some do by default), customer data is transmitted to a third party\'s infrastructure.',
+   mitigation:'Use an LLM provider with a signed DPA (Data Processing Agreement) and logging disabled for API calls. For enterprise deployments, use a self-hosted or VPC-isolated model. Instruct the agent to never reproduce raw PII fields in responses — summarize instead of quoting. Review the provider\'s data retention policy before deployment.'},
+  {id:'p3', sev:'warn', sevCol:'var(--yellow)', title:'Service account credentials provide all-or-nothing access to Google Sheets data',
+   risk:'A single service account shared to the ops Google Sheet gains access to the entire spreadsheet — all tabs, all columns, all rows. If the service account key is compromised, all customer data in the sheet is exposed. There is no column-level permission scoping in Google Sheets.',
+   mitigation:'Create a read-only, dedicate service account with the minimum name needed. Only share the specific sheet tab (not the entire file) with the service account. Rotate the service account key quarterly. Log all API calls made by the service account. Consider migrating the ops data to a system that supports column-level access control (e.g., BigQuery with VPC-SC or a purpose-built DB) if scale increases.'},
+  {id:'p4', sev:'warn', sevCol:'var(--yellow)', title:'Agent has no mechanism to enforce data purpose limitation (purpose creep risk)',
+   risk:'Today\'s use case is churn analysis. But with access to the same connectors, a CS manager could ask "what is the email address and phone number of every customer who scored below 4 on NPS?" — and the agent would answer it, because it can. Purpose creep is when a system designed for one use is repurposed for another without a new privacy assessment.',
+   mitigation:'Implement a system prompt instruction that explicitly prohibits certain query types (e.g., bulk export of contact details, queries that combine PII with financial data, queries about individual employees rather than accounts). Log all queries and run a weekly audit for purpose-creep patterns. Formally document the "permitted purpose" in the agent\'s deployment documentation and review it quarterly.'},
+];
+function buildPrivacy(){
+  privBuilt=true;
+  const el=document.getElementById('privacyList');
+  PRIVACY_ITEMS.forEach((item,i)=>{
+    const div=document.createElement('div');div.className='priv-item';div.id='pi-'+item.id;
+    div.innerHTML=`
+      <div class="priv-head" onclick="openPrivacy('${item.id}')">
+        <div class="priv-sev" style="background:${item.sevCol}"></div>
+        <div class="priv-title">Privacy Concern ${i+1}: ${item.title}</div>
+        <span class="priv-arrow">▶</span>
+      </div>
+      <div class="priv-body">
+        <div style="font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--GA-red);margin-bottom:6px">⚠️ The Risk</div>
+        <p style="font-size:.88rem;color:var(--gray-lt);line-height:1.72;margin-bottom:14px">${item.risk}</p>
+        <div style="font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:6px">✓ Proposed Mitigation</div>
+        <p style="font-size:.88rem;color:var(--gray-lt);line-height:1.72">${item.mitigation}</p>
+      </div>`;
+    el.appendChild(div);
+  });
+}
+function openPrivacy(id){
+  const item=document.getElementById('pi-'+id);
+  item.classList.toggle('open');
+  if(!privReviewed.has(id)){
+    privReviewed.add(id);
+    document.getElementById('privCount').textContent=privReviewed.size;
+    document.getElementById('privCount').style.color=privReviewed.size>=4?'var(--green)':'var(--GA-red)';
+    if(privReviewed.size>=4){
+      document.getElementById('privNextBtn').style.display='inline-flex';
+      markDone('privacy');
+      sectionScores.privacy={earned:4,possible:4};
+    }
+  }
+}
+
+// ─── IDE ─────────────────────────────────────────────────────────────────────
+let ideBuilt=false, apiConnected=false, apiProvider='anthropic', chatHistory=[];
+const PANE_CONTENTS={
+  prompt:`You are a Customer Success agent for Northstar SaaS Co.
+
+You have access to two data sources:
+1. HubSpot CRM — company records, deal status, ARR, CS ownership, call notes
+2. Google Sheets Ops Export — last login date, MAU, NPS score, support tickets, churn risk score (1-5)
+
+Your job:
+- Answer questions about customer health, churn risk, and account activity
+- Prioritize accounts by business impact (ARR x churn risk)
+- Suggest CS actions based on patterns you observe
+
+Privacy rules you must follow:
+- Never reproduce raw email addresses or phone numbers in responses
+- Summarize note content — do not quote verbatim
+- Do not answer bulk-export queries (e.g. "give me every email address")
+- If asked for data outside your permitted scope, decline and explain why
+
+Today's simulated data is embedded in your context.
+Always explain your reasoning. Be specific about which signals drove your answer.`,
+  schema:`// Northstar Integration Schema — v1.0
+// Connectors: HubSpot CRM + Google Sheets (Ops Export)
+
+{
+  "hubspot_company": {
+    "company_id": "string",           // CRM ID
+    "company_name": "string",         // ✅ Necessary
+    "industry": "string",             // ✅ Necessary
+    "arr_usd": "number",              // ✅ Necessary
+    "deal_stage": "string",           // ✅ Necessary
+    "cs_owner": "string",             // ✅ Necessary (name only)
+    "cs_notes": "string",             // ⚠️ Sensitive — PII redacted
+    "contact_email": "REDACTED",      // 🚫 Should Not Access
+    "contact_phone": "REDACTED",      // 🚫 Should Not Access
+    "payment_method": "REDACTED"      // 🚫 Should Not Access
+  },
+  "ops_sheet": {
+    "company_id": "string",           // Join key
+    "last_login_date": "date",        // ✅ Necessary
+    "mau_count": "number",            // ✅ Necessary
+    "nps_score": "number",            // ✅ Necessary
+    "support_tickets_90d": "number",  // ✅ Necessary
+    "churn_risk_score": "number",     // ✅ Necessary (1–5)
+    "ops_notes": "string"             // ⚠️ Sensitive — PII redacted
+  }
+}`,
+  privacy:`// Privacy Rules — Northstar CS Agent
+// Enforced at system prompt + data pipeline levels
+
+RULE 1: No bulk contact exports
+  BLOCKED: "Give me all email addresses for churn risk > 3"
+  ALLOWED: "Which companies have churn risk > 3? Who is the CS owner?"
+
+RULE 2: No verbatim note reproduction
+  BLOCKED: "Show me the full call notes for Acme Corp"
+  ALLOWED: "Summarize the key themes from Acme Corp's recent CS interactions"
+
+RULE 3: PII fields are redacted before agent context
+  All contact_email, contact_phone, payment_method fields
+  are replaced with "[REDACTED]" before entering LLM context.
+
+RULE 4: Purpose limitation
+  Permitted: churn analysis, account health, CS prioritization
+  Not permitted: competitive analysis using customer data,
+  individual employee profiling, data for outbound marketing`
+};
+
+function buildIDE(){
+  ideBuilt=true;
+  document.getElementById('ideTextarea').value=PANE_CONTENTS.prompt;
+  updateGutter();
+  // Sample prompts
+  const samples=[
+    'Which accounts have not logged in for 30+ days?',
+    'Show me the top 3 highest churn risk accounts by ARR',
+    'What does a churn risk score of 5 mean, and what should I do?',
+    'Which accounts have high NPS but low MAU — explain the disconnect',
+    'Summarize the overall health of the customer base',
+  ];
+  const el=document.getElementById('samplePrompts');
+  samples.forEach(s=>{
+    const btn=document.createElement('button');
+    btn.className='btn-ghost';btn.style.cssText='font-size:.8rem;padding:7px 14px';
+    btn.textContent=s;
+    btn.addEventListener('click',()=>{
+      document.getElementById('chatInput').value=s;
+      autoResize(document.getElementById('chatInput'));
+    });
+    el.appendChild(btn);
+  });
+}
+function switchPane(key,el){
+  document.querySelectorAll('.ide-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('ideTextarea').value=PANE_CONTENTS[key];
+  updateGutter();
+}
+function updateGutter(){
+  const ta=document.getElementById('ideTextarea');
+  const lines=ta.value.split('\n').length;
+  const g=document.getElementById('ideGutter');
+  g.innerHTML=Array.from({length:Math.max(lines,20)},(_,i)=>`<div>${i+1}</div>`).join('');
+}
+function syncGutter(){
+  const ta=document.getElementById('ideTextarea');
+  document.getElementById('ideGutter').scrollTop=ta.scrollTop;
+}
+function resetPrompt(){
+  document.getElementById('ideTextarea').value=PANE_CONTENTS.prompt;
+  updateGutter();
+  document.querySelectorAll('.ide-tab').forEach((t,i)=>{t.classList.remove('active');if(i===0)t.classList.add('active');});
+}
+
+// API / PROVIDER
+let currentProvider='anthropic';
+function cycleProvider(){
+  const providers=['anthropic','openai'];
+  const idx=providers.indexOf(currentProvider);
+  currentProvider=providers[(idx+1)%providers.length];
+  document.getElementById('providerBtn').textContent='Provider: '+(currentProvider==='anthropic'?'Anthropic':'OpenAI');
+  document.getElementById('modelBadge').textContent=currentProvider==='anthropic'?'claude-sonnet-4-20250514':'gpt-4o';
+}
+function toggleKeyVis(){
+  const inp=document.getElementById('apiKey');
+  const btn=event.currentTarget;
+  if(inp.type==='password'){inp.type='text';btn.textContent='🙈 Hide';}
+  else{inp.type='password';btn.textContent='👁 Show';}
+}
+function validateKey(){
+  const key=document.getElementById('apiKey').value.trim();
+  const dot=document.getElementById('statusDot');
+  const txt=document.getElementById('statusText');
+  if(!key){dot.className='status-dot';txt.textContent='Not connected — enter your API key above';apiConnected=false;document.getElementById('chatSend').disabled=true;return;}
+  if(key.length<20){dot.className='status-dot error';txt.textContent='Key too short — check for copy errors';return;}
+  dot.className='status-dot';txt.textContent='Key entered — click Connect to test';
+}
+async function connectAPI(){
+  const key=document.getElementById('apiKey').value.trim();
+  if(!key){alert('Enter an API key first.');return;}
+  const dot=document.getElementById('statusDot');
+  const txt=document.getElementById('statusText');
+  dot.className='status-dot';txt.textContent='Testing connection...';
+  try{
+    const endpoint=currentProvider==='anthropic'?'https://api.anthropic.com/v1/messages':'https://api.openai.com/v1/chat/completions';
+    if(currentProvider==='anthropic'){
+      const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:50,messages:[{role:'user',content:'Say: Connected'}]})});
+      if(!r.ok){const e=await r.json();throw new Error(e.error?.message||r.status);}
+    } else {
+      const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify({model:'gpt-4o',max_tokens:50,messages:[{role:'user',content:'Say: Connected'}]})});
+      if(!r.ok){const e=await r.json();throw new Error(e.error?.message||r.status);}
+    }
+    dot.className='status-dot connected';
+    txt.textContent='Connected ✓ — '+(currentProvider==='anthropic'?'claude-sonnet-4-20250514':'gpt-4o')+' is ready';
+    apiConnected=true;
+    document.getElementById('chatSend').disabled=false;
+    addAgentMessage('Connection verified! I\'m your Northstar CS agent. Ask me anything about customer health, churn risk, or account activity. I\'m operating with the privacy rules from your integration plan — I won\'t reproduce raw contact details or answer bulk export queries.');
+  }catch(e){
+    dot.className='status-dot error';txt.textContent='Error: '+e.message;apiConnected=false;
+  }
+}
+async function sendMessage(){
+  if(!apiConnected){alert('Connect your API key first.');return;}
+  const inp=document.getElementById('chatInput');
+  const msg=inp.value.trim();if(!msg)return;
+  inp.value='';autoResize(inp);
+  addUserMessage(msg);
+  chatHistory.push({role:'user',content:msg});
+  document.getElementById('chatSend').disabled=true;
+  // Show typing
+  const typing=document.createElement('div');typing.className='typing show';typing.innerHTML='<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+  const messages=document.getElementById('chatMessages');messages.appendChild(typing);messages.scrollTop=messages.scrollHeight;
+  try{
+    const systemPrompt=document.getElementById('ideTextarea').value;
+    // Inject simulated data context
+    const dataContext=`\n\n--- SIMULATED CUSTOMER DATA ---\nAccount: Acme Corp | ARR: $42,000 | Churn Risk: 4 | Last Login: 34 days ago | MAU: 3 (was 12) | NPS: 5 | Tickets (90d): 8 | CS Owner: Sarah Chen | Deal Stage: At Risk\nAccount: Globex Ltd | ARR: $18,500 | Churn Risk: 2 | Last Login: 2 days ago | MAU: 28 | NPS: 9 | Tickets (90d): 1 | CS Owner: Marcus Lee | Deal Stage: Renewing\nAccount: Initech Inc | ARR: $67,000 | Churn Risk: 5 | Last Login: 61 days ago | MAU: 0 | NPS: 3 | Tickets (90d): 14 | CS Owner: Sarah Chen | Deal Stage: Churned Risk\nAccount: Umbrella Co | ARR: $9,200 | Churn Risk: 1 | Last Login: 1 day ago | MAU: 45 | NPS: 10 | Tickets (90d): 0 | CS Owner: Jordan Park | Deal Stage: Expanding\nAccount: Soylent Corp | ARR: $28,000 | Churn Risk: 3 | Last Login: 12 days ago | MAU: 9 | NPS: 7 | Tickets (90d): 4 | CS Owner: Marcus Lee | Deal Stage: Active`;
+    const key=document.getElementById('apiKey').value.trim();
+    let responseText='';
+    if(currentProvider==='anthropic'){
+      const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'},
+        body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,system:systemPrompt+dataContext,messages:chatHistory})});
+      const d=await r.json();if(!r.ok)throw new Error(d.error?.message||r.status);
+      responseText=d.content[0].text;
+    } else {
+      const r=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+        body:JSON.stringify({model:'gpt-4o',max_tokens:600,messages:[{role:'system',content:systemPrompt+dataContext},...chatHistory]})});
+      const d=await r.json();if(!r.ok)throw new Error(d.error?.message||r.status);
+      responseText=d.choices[0].message.content;
+    }
+    typing.remove();
+    chatHistory.push({role:'assistant',content:responseText});
+    addAgentMessage(responseText);
+    sectionScores.ide={earned:1,possible:1};
+  }catch(e){
+    typing.remove();addAgentMessage('⚠️ API Error: '+e.message+'. Check your key and try again.');
+  }
+  document.getElementById('chatSend').disabled=false;
+}
+function addUserMessage(text){
+  const el=document.createElement('div');el.className='msg user';
+  el.innerHTML=`<div class="msg-avatar" style="background:var(--blue)">U</div><div class="msg-bubble">${esc(text)}</div>`;
+  const msgs=document.getElementById('chatMessages');msgs.appendChild(el);msgs.scrollTop=msgs.scrollHeight;
+}
+function addAgentMessage(text){
+  const el=document.createElement('div');el.className='msg agent';
+  el.innerHTML=`<div class="msg-avatar">CS</div><div class="msg-bubble">${text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br/>')}</div>`;
+  const msgs=document.getElementById('chatMessages');msgs.appendChild(el);msgs.scrollTop=msgs.scrollHeight;
+}
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function handleEnter(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}}
+function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
+
+// ─── QUIZ ─────────────────────────────────────────────────────────────────────
+const QUESTIONS=[
+  {q:'Which connector combination is most appropriate for the Northstar CS agent, and why?',
+   opts:['HubSpot only — CRM data is sufficient for churn analysis','HubSpot + Google Sheets — together they provide all necessary signals (account context + product usage) without adding unnecessary data scope','All available connectors — maximum data improves churn prediction accuracy','Google Sheets only — the ops export already contains churn scores'],
+   ans:1,ok:'Correct. HubSpot provides account context and CS ownership. Google Sheets provides product usage and churn scores. Together they cover the complete picture. Adding more connectors (Stripe, Gmail, Slack) would increase attack surface without adding churn-relevant signal.',
+   bad:'Not quite. The correct principle is data minimization — connect only what\'s necessary for the stated purpose. HubSpot + Sheets together cover all the signals needed for churn analysis. Additional connectors add risk without adding value.'},
+  {q:'Why should contact email addresses be tagged "Should Not Access" rather than "Sensitive" for this agent?',
+   opts:['Email addresses are not in the CRM','Email addresses are only useful for sending emails — and the agent\'s stated purpose is answering internal CS team questions, not contacting customers. There is no legitimate agent need for raw email data, so it should not be in scope at all','Email addresses are always public information','Sensitive fields are acceptable for agents to access'],
+   ans:1,ok:'Correct. "Sensitive" means the field is useful but requires justification. "Should Not Access" means there is no legitimate need for the agent to read this field at all. The CS team asking "which accounts are at risk?" never needs the agent to reproduce email addresses — that\'s a purpose-mismatch, not just a sensitivity concern.',
+   bad:'Not quite. The principle of data minimization says: if a field isn\'t needed to fulfill the agent\'s purpose, it shouldn\'t be in scope at all. "Sensitive" implies the field is needed but risky. Email addresses have no role in churn analysis — they should simply be excluded from the connector\'s data scope.'},
+  {q:'What is the primary privacy concern when an agent passes free-text CS notes to an LLM API?',
+   opts:['Notes are usually too long for the context window','Free-text notes frequently contain PII (personal situations, names, NDA-sensitive content) that may be logged by the LLM provider, stored in model context, or reproduced in responses — creating data leakage risk','Notes use informal language that confuses the model','Notes are copyrighted by the CS rep'],
+   ans:1,ok:'Correct. Free-text fields are the highest-risk data type in any integration because their contents are unpredictable and unstructured. A CS rep might note "Maria is going through a divorce and asked to delay renewal" — personal information that was never intended to enter an LLM\'s context window or logs.',
+   bad:'Not quite. The core risk is PII exposure. Free-text notes frequently contain personal information about real individuals that was written for internal use only. When this text is passed to a third-party LLM API, it may be logged, stored, or reproduced — violating data protection obligations.'},
+  {q:'What does "purpose creep" mean in the context of data integration?',
+   opts:['The agent\'s context window grows too large over time','A system designed and approved for one specific purpose (e.g., churn analysis) is later used for a different purpose (e.g., bulk contact export for marketing) without a new privacy assessment — the original permissions are reused for an unapproved use','The agent becomes too slow as more data is added','Purpose creep is when data is deleted accidentally'],
+   ans:1,ok:'Correct. Purpose creep is one of the most common real-world privacy violations in AI systems. The integration was scoped for churn analysis — but with CRM access, a user could ask for bulk contact exports. Preventing this requires system prompt instructions, query logging, and periodic purpose-limitation audits.',
+   bad:'Not quite. Purpose creep occurs when an AI system is used for a purpose beyond its original scope — without a new privacy review or consent process. The same connector that supports churn analysis could also support unsanctioned purposes if no guardrails are in place.'},
+  {q:'What is the correct architecture for handling PII in an agent that uses a third-party LLM API?',
+   opts:['Pass all data to the LLM — modern LLMs are privacy-compliant','Redact PII fields (emails, phone numbers, payment data) before they enter the LLM\'s context window. The LLM receives only the data needed to answer the query — with sensitive identifiers replaced by tokens or placeholders','Delete PII from the source system before integration','Only use open-source models to avoid privacy concerns'],
+   ans:1,ok:'Correct. The redaction layer is a critical architectural component of any privacy-preserving integration. PII is stripped or tokenized before it reaches the LLM — the model never sees the raw value, so it cannot reproduce it in responses or logs.',
+   bad:'Not quite. The correct architecture inserts a redaction step between the data source and the LLM context. PII fields are replaced with "[REDACTED]" or a token before the data enters the LLM\'s prompt — preventing accidental reproduction in responses and reducing exposure if the provider logs API traffic.'},
+  {q:'Why is a dedicated read-only service account preferable to sharing the Google Sheet with a personal Google account for agent access?',
+   opts:['Service accounts are faster','Personal accounts could be deactivated when an employee leaves — taking the integration offline. A service account is organization-owned, auditable, can be given minimal read-only permissions, and its access can be revoked without affecting any person\'s account','Service accounts have unlimited API calls','Personal accounts cannot access Google Sheets via API'],
+   ans:1,ok:'Correct. Service accounts provide separation of concerns — the agent\'s access is not tied to any individual. They can be scoped to read-only, audited independently, and revoked without side effects. Using a personal account creates a single point of failure and makes the integration brittle.',
+   bad:'Not quite. The organizational and security reasons are the key ones: (1) the integration remains operational when employees leave, (2) the account can be scoped to minimum permissions without affecting a real person\'s access, (3) the account\'s activity can be audited in isolation, and (4) it follows the principle of least privilege.'},
+  {q:'Which of these is the correct definition of the "principle of data minimization"?',
+   opts:['Always use the smallest dataset that will fit in the context window','Collect, access, and process only the personal data that is strictly necessary for the specific, legitimate purpose — and nothing more. Any field that isn\'t directly needed should be excluded from scope','Minimize the number of API calls to reduce cost','Use compressed data formats to reduce storage'],
+   ans:1,ok:'Correct. Data minimization is a foundational principle in GDPR, CCPA, and enterprise data governance. It applies directly to AI integrations: every field you connect is a liability. If a field doesn\'t contribute to the agent\'s stated purpose, it should not be in scope.',
+   bad:'Not quite. Data minimization is a privacy law principle, not a performance optimization. It means: only access what you actually need for the specific, stated purpose of the system. Every field you connect creates legal, security, and reputational risk — it must justify its own presence.'},
+];
+let qIdx=0,qScore=0,quizStarted=false,qAnswered=false;
+function initQuiz(){quizStarted=true;qIdx=0;qScore=0;showQ();}
+function showQ(){
+  qAnswered=false;
+  const q=QUESTIONS[qIdx];
+  document.getElementById('qProg').style.width=(qIdx/QUESTIONS.length*100)+'%';
+  document.getElementById('qMeta').textContent=`Question ${qIdx+1} of ${QUESTIONS.length}`;
+  document.getElementById('qScoreTxt').textContent=`Score: ${qScore} / ${qIdx}`;
+  document.getElementById('quizQ').textContent=q.q;
+  document.getElementById('quizFB').className='fb-box';document.getElementById('quizFB').innerHTML='';
+  document.getElementById('qNextBtn').style.display='none';
+  const L=['A','B','C','D'];
+  document.getElementById('quizOpts').innerHTML=q.opts.map((o,i)=>
+    `<button class="q-opt" onclick="answerQ(${i})"><div class="q-opt-k">${L[i]}</div>${o}</button>`
+  ).join('');
+}
+function answerQ(i){
+  if(qAnswered)return;qAnswered=true;
+  const q=QUESTIONS[qIdx];const ok=i===q.ans;if(ok)qScore++;
+  document.querySelectorAll('.q-opt').forEach((el,idx)=>{
+    el.classList.add('disabled');
+    if(idx===q.ans)el.classList.add('correct');
+    else if(idx===i&&!ok)el.classList.add('wrong');
+  });
+  const fb=document.getElementById('quizFB');
+  fb.innerHTML=`<span style="font-size:1.1rem;flex-shrink:0">${ok?'✓':'✗'}</span><span>${ok?q.ok:q.bad}</span>`;
+  fb.className='fb-box show '+(ok?'ok':'bad');
+  document.getElementById('qScoreTxt').textContent=`Score: ${qScore} / ${qIdx+1}`;
+  document.getElementById('qNextBtn').style.display='inline-flex';
+  if(qIdx===QUESTIONS.length-1)document.getElementById('qNextBtn').textContent='See Results →';
+}
+function nextQ(){qIdx++;if(qIdx>=QUESTIONS.length){showQuizDone();return;}showQ();}
+function showQuizDone(){
+  document.getElementById('quizActive').style.display='none';document.getElementById('quizDone').style.display='block';
+  const pct=Math.round(qScore/QUESTIONS.length*100);
+  sectionScores.quiz={earned:qScore,possible:QUESTIONS.length};
+  document.getElementById('qBadge').innerHTML=`<span class="badge ${pct>=70?'b-green':'b-red'}">${qScore}/${QUESTIONS.length} · ${pct}%</span>`;
+  document.getElementById('qMsg').textContent=pct>=70
+    ?`Solid work — ${pct}%. You understand data minimization, purpose limitation, and secure integration design.`
+    :`You scored ${pct}%. Review the Data Plan and Privacy sections — the quiz draws directly from both. The core principle: every field you connect is a liability that must justify its own presence.`;
+  if(pct>=70)markDone('quiz');
+}
+
+// ─── RESULTS ──────────────────────────────────────────────────────────────────
+function buildResults(){
+  const te=Object.values(sectionScores).reduce((s,x)=>s+(x.earned||0),0);
+  const tp=Object.values(sectionScores).reduce((s,x)=>s+(x.possible||0),0);
+  const pct=tp>0?Math.round((te/tp)*100):0;
+  const grade=pct>=90?{l:'Integration Architect',e:'🔌',m:'You design integrations that are precise, auditable, and defensible in a privacy review.'}:
+              pct>=70?{l:'Data Steward',          e:'🗄', m:'Strong foundational instincts. Review what you missed in the field tagging exercise.'}:
+              pct>=50?{l:'Integration Apprentice', e:'🔧',m:'Re-read the Data Plan rationale and Privacy sections before your next integration project.'}:
+                      {l:'Explorer',               e:'🔍',m:'Start with the Brief again — the principles build on each other.'};
+  const circ=2*Math.PI*52,dash=circ*(1-pct/100);
+  const breakdown=[
+    {key:'connectors',label:'Connector Selection',   pos:sectionScores.connectors?.earned||0, poss:1},
+    {key:'dataplan',  label:'Data Access Map',        pos:sectionScores.dataplan?.earned||0,   poss:sectionScores.dataplan?.possible||14},
+    {key:'privacy',   label:'Privacy Analysis',       pos:sectionScores.privacy?.earned||0,    poss:4},
+    {key:'ide',       label:'Live IDE Interaction',   pos:sectionScores.ide?.earned||0,        poss:1},
+    {key:'quiz',      label:'Knowledge Check',        pos:sectionScores.quiz?.earned||0,       poss:7},
+  ];
+  const rows=breakdown.map(item=>{
+    const p=item.poss>0?Math.round((item.pos/item.poss)*100):0;
+    const col=p>=80?'var(--green)':p>=50?'var(--yellow)':'var(--GA-red)';
+    return `<div class="score-row"><div class="score-dot" style="background:${col}"></div>
+      <span style="flex:1;font-size:.9rem;font-weight:500;color:var(--gray-lt)">${item.label}</span>
+      <div class="score-bar-wrap"><div class="score-bar-fill" style="width:${p}%;background:${col}"></div></div>
+      <span style="font-size:.82rem;color:var(--gray);min-width:38px;text-align:right">${item.pos}/${item.poss}</span>
+      <span class="badge" style="background:${p>=80?'rgba(34,197,94,.15)':p>=50?'rgba(245,197,24,.15)':'rgba(232,51,58,.15)'};color:${col};min-width:38px;text-align:center">${p}%</span>
+    </div>`;
+  }).join('');
+  const takeaways=[
+    'Every field you connect is a liability, not just an asset. Before adding a data field to an agent\'s scope, ask: "Can the agent fulfill its stated purpose without this?" If the answer is yes — exclude it. Data minimization is not a compliance checkbox. It is the principle that prevents your integration from becoming a data breach waiting to happen.',
+    'Free-text fields deserve special treatment. Notes, descriptions, and comments are the highest-risk data type in any integration — they are unpredictable, unstructured, and routinely contain PII that was never intended for an LLM\'s context. Always apply a redaction layer before free-text enters the agent\'s prompt.',
+    'An integration plan is a privacy document. A connector selection, a data field map, and a privacy concern analysis are not technical niceties — they are the artifacts a privacy auditor, regulator, or legal team will ask for. Building the habit of writing them down is the difference between a defensible deployment and a liability.',
+  ].map((t,i)=>`<div class="tk-item"><div class="tk-num">0${i+1}</div><div class="tk-txt">${t}</div></div>`).join('');
+  document.getElementById('resultsBody').innerHTML=`
+    <div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap;padding-bottom:36px;border-bottom:1px solid var(--line);margin-bottom:32px">
+      <div class="results-ring">
+        <svg width="120" height="120" style="transform:rotate(-90deg)" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="52" fill="none" stroke="var(--black3)" stroke-width="8"/>
+          <circle cx="60" cy="60" r="52" fill="none" stroke="var(--GA-red)" stroke-width="8"
+            stroke-dasharray="${circ.toFixed(1)}" stroke-dashoffset="${dash.toFixed(1)}"
+            stroke-linecap="round" style="transition:stroke-dashoffset 1.2s ease"/>
+        </svg>
+        <div class="results-ring-txt"><div class="ring-pct">${pct}%</div><div class="ring-sub">score</div></div>
+      </div>
+      <div>
+        <div style="font-size:2rem;margin-bottom:4px">${grade.e}</div>
+        <h2 style="font-size:clamp(2rem,5vw,2.8rem);margin-bottom:6px">${grade.l}</h2>
+        <p style="color:var(--gray-lt);font-size:.95rem">${grade.m}</p>
+        <p style="color:var(--gray-dk);font-size:.82rem;margin-top:6px;font-family:'JetBrains Mono',monospace">${te} pts earned · ${tp} pts possible</p>
+      </div>
+    </div>
+    <span class="eyebrow">Score Breakdown</span>
+    <div class="card" style="padding:8px 20px;margin-bottom:28px">${rows}</div>
+    <span class="eyebrow">Key Takeaways</span>
+    <div class="card" style="padding:8px 20px;margin-bottom:24px">${takeaways}</div>
+    <div style="background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);border-radius:var(--r-lg);padding:20px">
+      <p style="font-size:.92rem;color:var(--gray-lt);line-height:1.7">
+        🎉 <strong style="color:#fff">Secure Integration Project complete.</strong><br/>
+        Next module: <strong style="color:#fff">Agent Evaluation & Testing</strong> — measuring whether your deployed agent is actually doing what you designed it to do.
+      </p>
+    </div>`;
+}
+</script>
+</body>
+</html>

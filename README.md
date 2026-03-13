@@ -286,3 +286,7 @@ https://pages.git.generalassemb.ly/Build-AI-Agents/Integration-With-Business-Dat
 - LGPD — *Lei Geral de Proteção de Dados Pessoais* (Brazil, Law 13.709/2018)
 - [OWASP — Sensitive Data Exposure](https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure)
 - NIST — *Principle of Least Privilege* (SP 800-53)
+
+---
+
+*General Assembly · Build AI Agents · BAA 16.0 · © 2026*

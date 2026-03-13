@@ -289,4 +289,4 @@ https://pages.git.generalassemb.ly/Build-AI-Agents/Integration-With-Business-Dat
 
 ---
 
-*General Assembly · Build AI Agents · BAA 16.0 · © 2026*
+*General Assembly · Build AI Agents · BAA 10.0 · © 2026*

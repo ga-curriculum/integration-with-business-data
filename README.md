@@ -263,7 +263,7 @@ Before deploying an agent that connects to live business data:
 
 ## 5. Lab (60 min)
 
-https://pages.git.generalassemb.ly/Build-AI-Agents/Integration-With-Business-Data/
+https://ga-curriculum.github.io/integration-with-business-data/
 
 ---
 
